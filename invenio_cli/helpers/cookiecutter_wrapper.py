@@ -5,7 +5,6 @@
 
 """Invenio Cookiecutter Config class."""
 
-import os
 import tempfile
 from configparser import ConfigParser
 
@@ -92,8 +91,7 @@ class CookiecutterWrapper(object):
     def create_and_dump_config_file(self):
         """Create a tmp file to store used configuration."""
         if not self.tmp_file:
-            _delete = False if os.name == "nt" else True
-            self.tmp_file = tempfile.NamedTemporaryFile(mode="w+", delete=_delete)
+            self.tmp_file = tempfile.NamedTemporaryFile(mode="w+")
 
         config = DEFAULT_CONFIG.copy()
         # BUG: when dumping {}, it's read back as a string '{}'
@@ -108,8 +106,6 @@ class CookiecutterWrapper(object):
         """Remove the tmp file."""
         if self.tmp_file:
             self.tmp_file.close()
-            if os.name == "nt":
-                os.remove(self.tmp_file.name)
 
     def get_replay(self):
         """Retrieve dict of user input values."""
