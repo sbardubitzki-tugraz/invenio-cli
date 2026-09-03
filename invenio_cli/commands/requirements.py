@@ -149,8 +149,8 @@ class RequirementsCommands(object):
         """Check the docker compose version."""
         # Output comes in the form of
         # 'Docker Compose version v2.17.3\n'
-        docker_helper = DockerHelper("", local=False)
         try:
+            docker_helper = DockerHelper("", local=False)
             result = run_cmd(docker_helper.docker_compose + ["version"])
             version = cls._version_from_string(result.output.strip())
             return cls._check_version(
